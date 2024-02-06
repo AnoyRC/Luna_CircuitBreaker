@@ -47,7 +47,7 @@ abstract contract Nonces {
     }
 }
 
-contract Luna is EIP712, Nonces {
+contract LunaForwarder is EIP712, Nonces {
     using ECDSA for bytes32;
 
     struct ForwardRequestData {
