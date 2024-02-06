@@ -25,11 +25,9 @@ contract Luna is TokenCallbackHandler, Initializable {
     uint256 private nonce;
 
     constructor(
-        string memory domain_,
         address passkeyVerifier_,
         address recoveryVerifier_
     ) {
-        DOMAIN = domain_;
         PASSKEY_VERIFIER = PasskeyUltraVerifier(passkeyVerifier_);
         RECOVERY_VERIFIER = RecoveryUltraVerifier(recoveryVerifier_);
     }
@@ -44,11 +42,12 @@ contract Luna is TokenCallbackHandler, Initializable {
         }
     }
 
-    function initialize(bytes memory _passkeyInputs, bytes32 _recoveryHash, string memory _email) external initializer {
-        _initialize(_passkeyInputs, _recoveryHash, _email);
+    function initialize(string memory domain ,bytes memory _passkeyInputs, bytes32 _recoveryHash, string memory _email) external initializer {
+        _initialize(domain, _passkeyInputs, _recoveryHash, _email);
     }
 
-    function _initialize(bytes memory _passkeyInputs, bytes32 _recoveryHash, string memory _email) internal virtual {
+    function _initialize(string memory domain, bytes memory _passkeyInputs, bytes32 _recoveryHash, string memory _email) internal virtual {
+        DOMAIN = domain;
         passkeyInputs = _passkeyInputs;
         recoveryHash = _recoveryHash;
         email = _email;
