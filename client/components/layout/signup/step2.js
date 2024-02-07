@@ -5,6 +5,7 @@ import { Input, Button } from "@material-tailwind/react";
 import { Info, Loader2 } from "lucide-react";
 import { useState } from "react";
 import { useSelector } from "react-redux";
+import useSignup from "@/hooks/useSignup";
 // import useSignup from "@/hooks/useSignup";
 
 const urbanist = Urbanist({
@@ -15,7 +16,7 @@ const urbanist = Urbanist({
 export default function Step2() {
   const [email, setEmail] = useState("");
   const isLoading = useSelector((state) => state.signup.isLoading);
-  //   const { handleSignup } = useSignup();
+  const { handleSignup } = useSignup();
 
   return (
     <>
@@ -41,7 +42,7 @@ export default function Step2() {
           urbanist.className + " mt-1 flex items-center justify-center"
         }
         onClick={() => {
-          //   handleSignup(email);
+          handleSignup(email);
         }}
         disabled={isLoading || email.length < 3}
       >

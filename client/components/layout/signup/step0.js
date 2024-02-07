@@ -5,6 +5,7 @@ import { Info, Loader2 } from "lucide-react";
 import { useDispatch, useSelector } from "react-redux";
 import { setName, setStep } from "@/redux/slice/signupSlice";
 import { useState, useRef, useEffect } from "react";
+import useLuna from "@/hooks/useLuna";
 
 const urbanist = Urbanist({
   subsets: ["latin"],
@@ -19,6 +20,7 @@ export default function Step0() {
   const [isUsed, setIsUsed] = useState(false);
   const inputRef = useRef(null);
   var timeout = null;
+  const { isValidLuna } = useLuna();
 
   const handleName = (e) => {
     if (e.target.value.length > 20) {
@@ -30,18 +32,14 @@ export default function Step0() {
     }
   };
 
-  const checkCelestial = async () => {
+  const checkLuna = async () => {
     if (name.length < 3) return;
     if (name.length > 20) return;
 
-    // const isUsed = await isValidCelestial(name + "@celestial");
+    const isUsed = await isValidLuna(name);
 
     setIsUsed(isUsed);
     setIsLoading(false);
-  };
-
-  const handlePassword = (e) => {
-    dispatch(setPassword(e.target.value));
   };
 
   useEffect(() => {
@@ -61,7 +59,7 @@ export default function Step0() {
     if (isTyping) {
       setIsLoading(true);
     } else {
-      checkCelestial();
+      checkLuna();
     }
   }, [isTyping, name]);
 
@@ -70,7 +68,7 @@ export default function Step0() {
       <div className="flex flex-col w-full">
         <div className="flex w-full">
           <Input
-            label="Domain"
+            label="Choose your Domain"
             size="lg"
             className={urbanist.className + " rounded-r-none"}
             labelProps={{

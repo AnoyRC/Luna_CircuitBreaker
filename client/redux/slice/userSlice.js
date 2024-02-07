@@ -5,9 +5,8 @@ const userSlice = createSlice({
 
   initialState: {
     user: {
-      pubKey: "0x11c88aCb3256A65D8A16e91E386f94D03769e0e7",
-      username: "Anoy@luna",
-      password: "",
+      pubKey: "0x0000000000000000000000000000000000000000",
+      username: "Null@luna",
     },
   },
 

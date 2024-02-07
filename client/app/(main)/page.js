@@ -16,6 +16,7 @@ import { useState, useEffect, useRef } from "react";
 import { Info, Loader2 } from "lucide-react";
 import { useDispatch } from "react-redux";
 import { toast } from "sonner";
+import useLuna from "@/hooks/useLuna";
 
 const urbanist = Urbanist({
   subsets: ["latin"],
@@ -24,7 +25,6 @@ const urbanist = Urbanist({
 
 export default function Page() {
   const [domain, setDomain] = useState("");
-  const [password, setPassword] = useState("");
   const [isLoading, setIsLoading] = useState(false);
   const [isUsed, setIsUsed] = useState(false);
   const [isTyping, setIsTyping] = useState(false);
@@ -34,11 +34,12 @@ export default function Page() {
   const [isRemember, setIsRemember] = useState(false);
   const [previousDomain, setPreviousDomain] = useState("");
   const dispatch = useDispatch();
+  const { isValidLuna } = useLuna();
 
   const checkLuna = async () => {
-    if (domain.length < 13) return;
+    if (domain.length < 4) return;
 
-    // Check Luna
+    const isUsed = await isValidLuna(domain);
 
     setIsUsed(isUsed);
     setIsLoading(false);
@@ -67,7 +68,7 @@ export default function Page() {
     if (isTyping) {
       setIsLoading(true);
     } else {
-      // Check Luna
+      checkLuna();
     }
   }, [isTyping, domain]);
 
@@ -157,21 +158,21 @@ export default function Page() {
                 @luna
               </Button>
             </div>
-            {isLoading && domain.length > 12 && (
+            {isLoading && domain.length > 3 && (
               <p className="mt-2 text-sm flex text-gray-500">
                 <Loader2 size={20} className="inline mr-1 animate-spin " />
                 Checking availability...
               </p>
             )}
 
-            {domain.length !== 0 && domain.length < 13 && (
+            {domain.length !== 0 && domain.length < 4 && (
               <p className="mt-2 text-sm flex text-gray-500">
                 <Info size={20} className="inline mr-1" />
                 Enter a valid domain
               </p>
             )}
 
-            {!isLoading && !isUsed && domain.length > 12 && (
+            {!isLoading && !isUsed && domain.length > 3 && (
               <p className="mt-2 text-sm flex text-red-500">
                 <Info size={20} className="inline mr-1" />
                 This domain is not registered
@@ -198,13 +199,7 @@ export default function Page() {
               manageSignIn();
               toast.success("Signed in successfully!");
             }}
-            disabled={
-              domain.length < 13 ||
-              password.length < 8 ||
-              isLoading ||
-              !isUsed ||
-              isProcessing
-            }
+            disabled={domain.length < 4 || isLoading || !isUsed || isProcessing}
           >
             {isProcessing ? (
               <Loader2 size={20} className="inline mr-1 animate-spin " />

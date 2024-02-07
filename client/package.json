@@ -18,7 +18,7 @@
     "ably": "^1.2.48",
     "axios": "^1.6.7",
     "boring-avatars": "^1.10.1",
-    "ethers": "^6.10.0",
+    "ethers": "5.7",
     "lucide-react": "^0.323.0",
     "magic-sdk": "^22.0.1",
     "next": "14.1.0",
