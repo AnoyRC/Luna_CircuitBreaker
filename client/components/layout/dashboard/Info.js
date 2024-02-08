@@ -26,7 +26,7 @@ export default function Info() {
         </p>
 
         <p className="text-2xl text-black font-bold flex items-center group-hover:underline text-black/40  transition duration-300">
-          @celestial
+          @luna
           <Copy className="inline-block ml-2 text-black/40" size={15} />
         </p>
       </div>

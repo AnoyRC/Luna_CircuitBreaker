@@ -12,9 +12,8 @@ const urbanist = Urbanist({
 });
 
 export default function Transactions() {
-  // const transactions = useSelector((state) => state.data.transactions);
+  const transactions = useSelector((state) => state.data.transactions);
   const router = useRouter();
-  const transactions = null;
 
   return (
     <div className="h-full w-full bg-white rounded-3xl flex flex-col justify-between p-4 relative overflow-hidden">

@@ -19,11 +19,9 @@ const CustomTooltip = ({ active, payload, label }) => {
 };
 
 export default function Balance() {
-  // const balance = useSelector((state) => state.data.balance);
-  // const ethPrice = useSelector((state) => state.data.ethPrice);
-  // const marketData = useSelector((state) => state.data.marketData);
-  const marketData = null;
-  const balance = "-.--";
+  const balance = useSelector((state) => state.data.balance);
+  const ethPrice = useSelector((state) => state.data.ethPrice);
+  const marketData = useSelector((state) => state.data.marketData);
 
   return (
     <div className="h-full w-full bg-white rounded-3xl flex flex-col p-5 px-7">

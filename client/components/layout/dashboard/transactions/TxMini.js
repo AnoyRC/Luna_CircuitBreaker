@@ -1,5 +1,5 @@
 "use client";
-import { CelestialSavingManager } from "@/lib/abis/AddressManager";
+import { LunaSavingManager } from "@/lib/abis/AddressManager";
 import { ArrowDownLeft, ArrowUpRight, PiggyBank } from "lucide-react";
 import { useSelector } from "react-redux";
 
@@ -12,8 +12,8 @@ export default function TxMini({ tx }) {
     <div className="flex w-full mt-4 rounded-2xl h-[70px] bg-white border-blue-500/70 hover:shadow-lg transition duration-300 border-[1px]">
       <div className=" flex h-full w-full items-center justify-between px-2">
         <p className="text-black/50 text-sm font-bold">
-          {tx.to.hash !== CelestialSavingManager ? (
-            tx.to.hash === walletAddress ? (
+          {tx.to !== LunaSavingManager.toLowerCase() ? (
+            tx.to === walletAddress.toLowerCase() ? (
               <ArrowDownLeft
                 className="inline-block text-green-500/70 mr-2"
                 size={45}

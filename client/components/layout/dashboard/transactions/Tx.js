@@ -1,6 +1,6 @@
 "use client";
 import {
-  CelestialSavingManager,
+  LunaSavingManager,
   PasskeyUltraVerifier,
   RecoveryUltraVerifier,
 } from "@/lib/abis/AddressManager";
@@ -14,8 +14,8 @@ import {
   PiggyBank,
 } from "lucide-react";
 import { useState } from "react";
-import toast from "react-hot-toast";
 import { useSelector } from "react-redux";
+import { toast } from "sonner";
 
 export default function TxMini({ tx }) {
   const walletAddress = useSelector((state) => state.user.user.pubKey);
@@ -24,23 +24,21 @@ export default function TxMini({ tx }) {
   const [isClicked, setIsClicked] = useState(false);
 
   if (tx.to === null) return;
-  if (tx.to.hash === PasskeyUltraVerifier) return;
-  if (tx.to.hash === RecoveryUltraVerifier) return;
+  if (tx.to === PasskeyUltraVerifier.toLowerCase()) return;
+  if (tx.to === RecoveryUltraVerifier.toLowerCase()) return;
   return (
     <div className="flex w-full mt-4 rounded-3xl bg-white shadow-lg transition duration-300 border cursor-pointer prevent-select">
       <div className=" flex h-full w-full items-center justify-between p-5">
         <div className="flex gap-2 items-center">
           <div>
-            {tx.to.hash !== CelestialSavingManager ? (
-              tx.to.hash === walletAddress ? (
+            {tx.to !== LunaSavingManager.toLowerCase() ? (
+              tx.to === walletAddress.toLowerCase() ? (
                 <p
                   className="text-black/50 group hover:bg-black hover:border-black transition duration-300 text-sm font-bold border border-green-500/70 rounded-lg p-5"
                   onClick={() => {
                     window
                       .open(
-                        `https://pegasus.lightlink.io/tx/${
-                          tx.hash ? tx.hash : tx.transaction_hash
-                        }`,
+                        `https://sepolia-blockscout.scroll.io/tx/${tx.hash}`,
                         "_blank"
                       )
                       .focus();
@@ -57,9 +55,7 @@ export default function TxMini({ tx }) {
                   onClick={() => {
                     window
                       .open(
-                        `https://pegasus.lightlink.io/tx/${
-                          tx.hash ? tx.hash : tx.transaction_hash
-                        }`,
+                        `https://sepolia-blockscout.scroll.io/tx/${tx.hash}`,
                         "_blank"
                       )
                       .focus();
@@ -77,9 +73,7 @@ export default function TxMini({ tx }) {
                 onClick={() => {
                   window
                     .open(
-                      `https://pegasus.lightlink.io/tx/${
-                        tx.hash ? tx.hash : tx.transaction_hash
-                      }`,
+                      `https://sepolia-blockscout.scroll.io/tx/${tx.hash}`,
                       "_blank"
                     )
                     .focus();
@@ -96,11 +90,11 @@ export default function TxMini({ tx }) {
           <div className="ml-1">
             <div className="flex gap-1 text-3xl">
               <p className="text-black/60 font-bold">
-                {tx.to.hash === walletAddress ? "Received " : "Sent "}
+                {tx.to === walletAddress.toLowerCase() ? "Received " : "Sent "}
               </p>
 
               <p className="text-black/60 font-bold">
-                {tx.to.hash === walletAddress ? " From" : " To"}
+                {tx.to === walletAddress.toLowerCase() ? " From" : " To"}
               </p>
             </div>
 
@@ -108,7 +102,7 @@ export default function TxMini({ tx }) {
               className={`flex items-center text-gray-600 hover:cursor-pointer`}
               onClick={() => {
                 navigator.clipboard.writeText(
-                  tx.to.hash === walletAddress ? tx.from.hash : tx.to.hash
+                  tx.to === walletAddress.toLowerCase() ? tx.from : tx.to
                 );
 
                 toast.success("Copied to clipboard");
@@ -125,9 +119,9 @@ export default function TxMini({ tx }) {
                   isClicked && "text-green-300"
                 }`}
               >
-                {tx.to.hash === walletAddress
-                  ? pubKeySlicer(tx.from.hash)
-                  : pubKeySlicer(tx.to.hash)}
+                {tx.to === walletAddress.toLowerCase()
+                  ? pubKeySlicer(tx.from)
+                  : pubKeySlicer(tx.to)}
               </p>
 
               {isClicked ? (
@@ -141,12 +135,12 @@ export default function TxMini({ tx }) {
 
         <div className="text-right">
           <p className="font-bold text-3xl text-black/60 mr-3">
-            <span>{tx.to.hash === walletAddress ? "+" : "-"}</span> $
+            <span>{tx.to === walletAddress.toLowerCase() ? "+" : "-"}</span> $
             {((tx.value / 10 ** 18) * ethPrice).toFixed(3)}
           </p>
 
           <p className="font-semibold text-base mr-3 text-black/40 uppercase">
-            {new Date(tx.timestamp).toLocaleString()}
+            {new Date(Number(tx.timeStamp) * 1000).toLocaleString()}
           </p>
         </div>
       </div>

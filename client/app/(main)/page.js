@@ -18,6 +18,7 @@ import { useDispatch } from "react-redux";
 import { toast } from "sonner";
 import useLuna from "@/hooks/useLuna";
 import { updatePubkey, updateUsername } from "@/redux/slice/userSlice";
+import { useRouter } from "next/navigation";
 
 const urbanist = Urbanist({
   subsets: ["latin"],
@@ -36,6 +37,7 @@ export default function Page() {
   const [previousDomain, setPreviousDomain] = useState("");
   const dispatch = useDispatch();
   const { isValidLuna, getLunaAddress } = useLuna();
+  const router = useRouter();
 
   const checkLuna = async () => {
     if (domain.length < 4) return;
@@ -55,6 +57,7 @@ export default function Page() {
       if (isRemember) {
         localStorage.setItem("domain", domain + "@luna");
       }
+      router.push("/dashboard");
     }
     setIsProcessing(false);
   };
