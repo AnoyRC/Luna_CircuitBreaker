@@ -38,7 +38,7 @@ export default function useWalletData() {
   const fetchTransactions = async (address) => {
     try {
       const res = await axios.get(
-        `https://sepolia-blockscout.scroll.io/api?module=account&action=txlist&address=${address}&page=1&offset=20`
+        `https://api-sepolia.scrollscan.com/api?module=account&action=txlist&address=${address}&page=1&offset=20`
       );
 
       console.log(res.data);

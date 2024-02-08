@@ -9,7 +9,12 @@ export default function TxMini({ tx }) {
 
   if (tx.to === null) return;
   return (
-    <div className="flex w-full mt-4 rounded-2xl h-[70px] bg-white border-blue-500/70 hover:shadow-lg transition duration-300 border-[1px]">
+    <div
+      className="flex w-full mt-4 rounded-2xl h-[70px] bg-white border-blue-500/70 hover:shadow-lg hover:cursor-pointer transition duration-300 border-[1px]"
+      onClick={() => {
+        window.open(`https://sepolia.scrollscan.dev/tx/${tx.hash}`, "_blank");
+      }}
+    >
       <div className=" flex h-full w-full items-center justify-between px-2">
         <p className="text-black/50 text-sm font-bold">
           {tx.to !== LunaSavingManager.toLowerCase() ? (

@@ -38,7 +38,7 @@ export default function TxMini({ tx }) {
                   onClick={() => {
                     window
                       .open(
-                        `https://sepolia-blockscout.scroll.io/tx/${tx.hash}`,
+                        `https://sepolia.scrollscan.dev/tx/${tx.hash}`,
                         "_blank"
                       )
                       .focus();
@@ -55,7 +55,7 @@ export default function TxMini({ tx }) {
                   onClick={() => {
                     window
                       .open(
-                        `https://sepolia-blockscout.scroll.io/tx/${tx.hash}`,
+                        `https://sepolia.scrollscan.dev/tx/${tx.hash}`,
                         "_blank"
                       )
                       .focus();
@@ -73,7 +73,7 @@ export default function TxMini({ tx }) {
                 onClick={() => {
                   window
                     .open(
-                      `https://sepolia-blockscout.scroll.io/tx/${tx.hash}`,
+                      `https://sepolia.scrollscan.dev/tx/${tx.hash}`,
                       "_blank"
                     )
                     .focus();
