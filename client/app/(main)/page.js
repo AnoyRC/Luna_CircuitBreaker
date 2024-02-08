@@ -17,6 +17,7 @@ import { Info, Loader2 } from "lucide-react";
 import { useDispatch } from "react-redux";
 import { toast } from "sonner";
 import useLuna from "@/hooks/useLuna";
+import { updatePubkey, updateUsername } from "@/redux/slice/userSlice";
 
 const urbanist = Urbanist({
   subsets: ["latin"],
@@ -34,7 +35,7 @@ export default function Page() {
   const [isRemember, setIsRemember] = useState(false);
   const [previousDomain, setPreviousDomain] = useState("");
   const dispatch = useDispatch();
-  const { isValidLuna } = useLuna();
+  const { isValidLuna, getLunaAddress } = useLuna();
 
   const checkLuna = async () => {
     if (domain.length < 4) return;
@@ -47,7 +48,14 @@ export default function Page() {
 
   const manageSignIn = async () => {
     setIsProcessing(true);
-    // handleSign;
+    if (isUsed) {
+      const lunaAddress = await getLunaAddress(domain);
+      dispatch(updatePubkey(lunaAddress));
+      dispatch(updateUsername(domain));
+      if (isRemember) {
+        localStorage.setItem("domain", domain + "@luna");
+      }
+    }
     setIsProcessing(false);
   };
 
@@ -76,10 +84,10 @@ export default function Page() {
     const previousDomain = localStorage.getItem("domain");
 
     if (previousDomain) {
-      if (previousDomain.length < 13 || !previousDomain.includes("@luna"))
+      if (previousDomain.length < 3 || !previousDomain.includes("@luna"))
         return;
 
-      setDomain(previousDomain);
+      setDomain(previousDomain.split("@luna")[0]);
       setPreviousDomain(previousDomain);
       setIsRemember(true);
     }
