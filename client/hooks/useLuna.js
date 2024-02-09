@@ -38,5 +38,37 @@ export default function useLuna() {
     }
   };
 
-  return { isValidLuna, getLunaAddress };
+  const getCredentialId = async (address) => {
+    try {
+      const provider = new ethers.providers.JsonRpcProvider(
+        process.env.NEXT_PUBLIC_RPC_URL
+      );
+
+      const luna = new Contract(address, LunaABI, provider);
+
+      const credentialId = await luna.getCredentialId();
+
+      return credentialId;
+    } catch (e) {
+      throw new Error(e);
+    }
+  };
+
+  const getNonce = async (address) => {
+    try {
+      const provider = new ethers.providers.JsonRpcProvider(
+        process.env.NEXT_PUBLIC_RPC_URL
+      );
+
+      const luna = new Contract(address, LunaABI, provider);
+
+      const nonce = await luna.getNonce();
+
+      return nonce;
+    } catch (e) {
+      throw new Error(e);
+    }
+  };
+
+  return { isValidLuna, getLunaAddress, getCredentialId, getNonce };
 }

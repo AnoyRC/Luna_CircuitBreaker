@@ -4,13 +4,13 @@
 // import Nfts from "@/components/modal/Nfts";
 // import Savings from "@/components/modal/Savings";
 // import StartSaving from "@/components/modal/StartSaving";
-// import TransferModal from "@/components/modal/Transfer";
+import TransferModal from "@/components/modal/Transfer";
 
 export default function Layout({ children }) {
   return (
     <>
-      {/* <DepositModal />
-      <TransferModal /> */}
+      {/* <DepositModal /> */}
+      <TransferModal />
       {children}
       {/* <ChangeEmail />
       <StartSaving />

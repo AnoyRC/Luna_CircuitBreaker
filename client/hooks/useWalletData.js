@@ -41,7 +41,6 @@ export default function useWalletData() {
         `https://api-sepolia.scrollscan.com/api?module=account&action=txlist&address=${address}&page=1&offset=20`
       );
 
-      console.log(res.data);
       dispatch(setTransactions(res.data.result));
     } catch (e) {
       dispatch(setTransactions([]));

@@ -31,7 +31,7 @@ export default function useSignup() {
   const handlePasskey = async () => {
     const challenge = "LUNA_SIGNIN";
 
-    const registration = await client.register("Luna", challenge, {
+    const registration = await client.register(name + "@luna", challenge, {
       authenticatorType: "auto",
       userVerification: "discouraged",
       timeout: 60000,

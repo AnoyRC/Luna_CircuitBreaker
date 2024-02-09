@@ -5,7 +5,7 @@ import { Button } from "@material-tailwind/react";
 import { useDispatch } from "react-redux";
 import { ArrowUpRight } from "lucide-react";
 
-// import { toggleTransferModal } from "@/redux/slice/modalSlice";
+import { toggleTransferModal } from "@/redux/slice/modalSlice";
 import { Urbanist } from "next/font/google";
 
 const urbanist = Urbanist({
