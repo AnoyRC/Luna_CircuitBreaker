@@ -48,16 +48,16 @@ contract LunaFactory is LunaStorage, ERC2771Context {
         )));
     }
 
-      function executeLunaTx(string memory name, bytes calldata proof, address dest, uint256 value, bytes calldata func) onlyTrustedForwarder isValidLuna(name) external returns (bool) {
+      function executeLunaTx(string memory name, bytes calldata proof, bytes memory authenticatorData, bytes1 authenticatorDataFlagMask, bytes memory clientData, uint clientChallengeDataOffset, address dest, uint256 value, bytes calldata func) onlyTrustedForwarder isValidLuna(name) external returns (bool) {
         Luna luna = Luna(payable(address(LunaNameToDetails[name].walletAddress)));
 
-        return luna.execute(proof, dest, value, func);
+        return luna.execute(proof, authenticatorData, authenticatorDataFlagMask, clientData, clientChallengeDataOffset, dest, value, func);
     }
 
-    function executeLunaBatchTx(string memory name, bytes calldata proof, address[] calldata dests, uint256[] calldata values, bytes[] calldata funcs) onlyTrustedForwarder isValidLuna(name) external returns (bool) {
+    function executeLunaBatchTx(string memory name, bytes calldata proof, bytes memory authenticatorData, bytes1 authenticatorDataFlagMask, bytes memory clientData, uint clientChallengeDataOffset, address[] calldata dests, uint256[] calldata values, bytes[] calldata funcs) onlyTrustedForwarder isValidLuna(name) external returns (bool) {
         Luna luna = Luna(payable(address(LunaNameToDetails[name].walletAddress)));
 
-        return luna.executeBatch(proof, dests, values, funcs);
+        return luna.executeBatch(proof, authenticatorData, authenticatorDataFlagMask, clientData, clientChallengeDataOffset, dests, values, funcs);
     }
 
     function executeLunaPasskeyRecovery(string memory name, bytes calldata proof, bytes memory _passkeyInput) onlyTrustedForwarder isValidLuna(name) external returns (bool) {

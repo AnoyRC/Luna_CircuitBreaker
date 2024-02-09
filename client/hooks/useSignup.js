@@ -29,7 +29,7 @@ export default function useSignup() {
   const { getLunaAddress } = useLuna();
 
   const handlePasskey = async () => {
-    const challenge = "LUNA_SIGNIN";
+    const challenge = "Luna_SIGNIN";
 
     const registration = await client.register(name + "@luna", challenge, {
       authenticatorType: "auto",
@@ -38,8 +38,6 @@ export default function useSignup() {
       attestation: false,
       debug: false,
     });
-
-    console.log(registration);
 
     dispatch(setPasskey(registration));
   };

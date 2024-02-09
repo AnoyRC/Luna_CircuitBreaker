@@ -54,22 +54,21 @@ contract Luna is TokenCallbackHandler, Initializable {
     }
 
     function getCredentialId() public view returns (string memory) {
-        (, ,string memory credentialId, , , , ) = Conversion.decodeEncodedInputs(passkeyInputs);
+        (, ,string memory credentialId) = Conversion.decodeEncodedInputs(passkeyInputs);
         return credentialId;
     }
 
     function getPublicKey() public view returns (bytes32, bytes32) {
-        (bytes32 pubkeyx, bytes32 pubkeyy, , , , , ) = Conversion.decodeEncodedInputs(passkeyInputs);
+        (bytes32 pubkeyx, bytes32 pubkeyy, ) = Conversion.decodeEncodedInputs(passkeyInputs);
         return (pubkeyx, pubkeyy);
     }
 
-    function getPasskeyMessage() public view returns (bytes32) {
-        (,,, bytes memory authenticatorData, bytes1 authenticatorDataFlagMask, bytes memory clientData, uint clientChallengeDataOffset) = Conversion.decodeEncodedInputs(passkeyInputs);
+    function getPasskeyMessage( bytes memory authenticatorData, bytes1 authenticatorDataFlagMask, bytes memory clientData, uint clientChallengeDataOffset) public view returns (bytes32) {
         return Conversion.computeMessage( authenticatorData, authenticatorDataFlagMask, clientData, Conversion.getPasskeyMessage(getNonce()) , clientChallengeDataOffset);
     }
 
-    function verifyPasskey(bytes calldata proof) public view returns (bool) {
-        (bytes32 pubkeyx, bytes32 pubkeyy, , bytes memory authenticatorData, bytes1 authenticatorDataFlagMask, bytes memory clientData, uint clientChallengeDataOffset) = Conversion.decodeEncodedInputs(passkeyInputs);
+    function verifyPasskey(bytes calldata proof, bytes memory authenticatorData, bytes1 authenticatorDataFlagMask, bytes memory clientData, uint clientChallengeDataOffset) public view returns (bool) {
+        (bytes32 pubkeyx, bytes32 pubkeyy, ) = Conversion.decodeEncodedInputs(passkeyInputs);
         bytes32 message = Conversion.computeMessage( authenticatorData, authenticatorDataFlagMask, clientData, Conversion.getPasskeyMessage(getNonce()) , clientChallengeDataOffset);
 
 
@@ -77,8 +76,8 @@ contract Luna is TokenCallbackHandler, Initializable {
         return PASSKEY_VERIFIER.verify(proof, inputs);
     }
 
-    function usePasskey(bytes calldata proof) internal returns (bool) {
-        (bytes32 pubkeyx, bytes32 pubkeyy, , bytes memory authenticatorData, bytes1 authenticatorDataFlagMask, bytes memory clientData, uint clientChallengeDataOffset) = Conversion.decodeEncodedInputs(passkeyInputs);
+    function usePasskey(bytes calldata proof, bytes memory authenticatorData, bytes1 authenticatorDataFlagMask, bytes memory clientData, uint clientChallengeDataOffset) internal returns (bool) {
+        (bytes32 pubkeyx, bytes32 pubkeyy,) = Conversion.decodeEncodedInputs(passkeyInputs);
         bytes32 message = Conversion.computeMessage( authenticatorData, authenticatorDataFlagMask, clientData, Conversion.getPasskeyMessage(_useNonce()) , clientChallengeDataOffset);
 
 
@@ -102,14 +101,14 @@ contract Luna is TokenCallbackHandler, Initializable {
         return RECOVERY_VERIFIER.verify(proof, _inputs);
     }
 
-    function execute(bytes calldata proof, address dest, uint256 value, bytes calldata func) external payable returns (bool) {
-        require(usePasskey(proof), "Invalid passkey");
+    function execute(bytes calldata proof, bytes memory authenticatorData, bytes1 authenticatorDataFlagMask, bytes memory clientData, uint clientChallengeDataOffset, address dest, uint256 value, bytes calldata func) external payable returns (bool) {
+        require(usePasskey(proof, authenticatorData, authenticatorDataFlagMask, clientData, clientChallengeDataOffset), "Invalid passkey");
         _execute(dest, value, func);
         return true;
     }
 
-    function executeBatch(bytes calldata proof, address[] calldata dest, uint256[] calldata value, bytes[] calldata func) external payable returns (bool) {
-        require(usePasskey(proof), "Invalid passkey");
+    function executeBatch(bytes calldata proof, bytes memory authenticatorData, bytes1 authenticatorDataFlagMask, bytes memory clientData, uint clientChallengeDataOffset,  address[] calldata dest, uint256[] calldata value, bytes[] calldata func) external payable returns (bool) {
+        require(usePasskey(proof, authenticatorData, authenticatorDataFlagMask, clientData, clientChallengeDataOffset), "Invalid passkey");
         _executeBatch(dest, value, func);
         return true;
     }

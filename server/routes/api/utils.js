@@ -28,16 +28,8 @@ router.post("/passkey/inputs", async (req, res) => {
   const abiCoder = new ethers.utils.AbiCoder();
 
   const inputs = abiCoder.encode(
-    ["bytes32", "bytes32", "string", "bytes", "bytes1", "bytes", "uint"],
-    [
-      pubKeyCoordinates[0],
-      pubKeyCoordinates[1],
-      credentialId,
-      authDataHex,
-      0x05,
-      clientDataHex,
-      challengeOffset,
-    ]
+    ["bytes32", "bytes32", "string"],
+    [pubKeyCoordinates[0], pubKeyCoordinates[1], credentialId]
   );
 
   res.json({
@@ -47,6 +39,7 @@ router.post("/passkey/inputs", async (req, res) => {
     authDataHex: authDataHex,
     clientDataHex: clientDataHex,
     challengeOffset: challengeOffset,
+    authenticatorDataFlagMask: 0x05,
   });
 });
 

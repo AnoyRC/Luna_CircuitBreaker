@@ -5,9 +5,561 @@
 import { GenericContractsDeclaration } from "~~/utils/scaffold-eth/contract";
 
 const deployedContracts = {
+  31337: {
+    Luna: {
+      address: "0x5FbDB2315678afecb367f032d93F642f64180aa3",
+      abi: [
+        {
+          inputs: [
+            {
+              internalType: "address",
+              name: "passkeyVerifier_",
+              type: "address",
+            },
+            {
+              internalType: "address",
+              name: "recoveryVerifier_",
+              type: "address",
+            },
+          ],
+          stateMutability: "nonpayable",
+          type: "constructor",
+        },
+        {
+          inputs: [],
+          name: "InvalidAuthenticatorData",
+          type: "error",
+        },
+        {
+          inputs: [],
+          name: "InvalidClientData",
+          type: "error",
+        },
+        {
+          anonymous: false,
+          inputs: [
+            {
+              indexed: false,
+              internalType: "uint8",
+              name: "version",
+              type: "uint8",
+            },
+          ],
+          name: "Initialized",
+          type: "event",
+        },
+        {
+          stateMutability: "payable",
+          type: "fallback",
+        },
+        {
+          inputs: [],
+          name: "DOMAIN",
+          outputs: [
+            {
+              internalType: "string",
+              name: "",
+              type: "string",
+            },
+          ],
+          stateMutability: "view",
+          type: "function",
+        },
+        {
+          inputs: [],
+          name: "PASSKEY_VERIFIER",
+          outputs: [
+            {
+              internalType: "contract PasskeyUltraVerifier",
+              name: "",
+              type: "address",
+            },
+          ],
+          stateMutability: "view",
+          type: "function",
+        },
+        {
+          inputs: [],
+          name: "RECOVERY_VERIFIER",
+          outputs: [
+            {
+              internalType: "contract RecoveryUltraVerifier",
+              name: "",
+              type: "address",
+            },
+          ],
+          stateMutability: "view",
+          type: "function",
+        },
+        {
+          inputs: [],
+          name: "email",
+          outputs: [
+            {
+              internalType: "string",
+              name: "",
+              type: "string",
+            },
+          ],
+          stateMutability: "view",
+          type: "function",
+        },
+        {
+          inputs: [
+            {
+              internalType: "bytes",
+              name: "proof",
+              type: "bytes",
+            },
+            {
+              internalType: "address",
+              name: "dest",
+              type: "address",
+            },
+            {
+              internalType: "uint256",
+              name: "value",
+              type: "uint256",
+            },
+            {
+              internalType: "bytes",
+              name: "func",
+              type: "bytes",
+            },
+          ],
+          name: "execute",
+          outputs: [
+            {
+              internalType: "bool",
+              name: "",
+              type: "bool",
+            },
+          ],
+          stateMutability: "payable",
+          type: "function",
+        },
+        {
+          inputs: [
+            {
+              internalType: "bytes",
+              name: "proof",
+              type: "bytes",
+            },
+            {
+              internalType: "address[]",
+              name: "dest",
+              type: "address[]",
+            },
+            {
+              internalType: "uint256[]",
+              name: "value",
+              type: "uint256[]",
+            },
+            {
+              internalType: "bytes[]",
+              name: "func",
+              type: "bytes[]",
+            },
+          ],
+          name: "executeBatch",
+          outputs: [
+            {
+              internalType: "bool",
+              name: "",
+              type: "bool",
+            },
+          ],
+          stateMutability: "payable",
+          type: "function",
+        },
+        {
+          inputs: [
+            {
+              internalType: "bytes",
+              name: "proof",
+              type: "bytes",
+            },
+            {
+              internalType: "bytes32",
+              name: "_recoveryHash",
+              type: "bytes32",
+            },
+            {
+              internalType: "string",
+              name: "_email",
+              type: "string",
+            },
+          ],
+          name: "executeChangeRecovery",
+          outputs: [
+            {
+              internalType: "bool",
+              name: "",
+              type: "bool",
+            },
+          ],
+          stateMutability: "payable",
+          type: "function",
+        },
+        {
+          inputs: [
+            {
+              internalType: "bytes",
+              name: "proof",
+              type: "bytes",
+            },
+            {
+              internalType: "bytes",
+              name: "_passkeyInputs",
+              type: "bytes",
+            },
+          ],
+          name: "executePasskeyRecovery",
+          outputs: [
+            {
+              internalType: "bool",
+              name: "",
+              type: "bool",
+            },
+          ],
+          stateMutability: "payable",
+          type: "function",
+        },
+        {
+          inputs: [],
+          name: "getCredentialId",
+          outputs: [
+            {
+              internalType: "string",
+              name: "",
+              type: "string",
+            },
+          ],
+          stateMutability: "view",
+          type: "function",
+        },
+        {
+          inputs: [],
+          name: "getNonce",
+          outputs: [
+            {
+              internalType: "uint256",
+              name: "",
+              type: "uint256",
+            },
+          ],
+          stateMutability: "view",
+          type: "function",
+        },
+        {
+          inputs: [],
+          name: "getPasskeyMessage",
+          outputs: [
+            {
+              internalType: "bytes32",
+              name: "",
+              type: "bytes32",
+            },
+          ],
+          stateMutability: "view",
+          type: "function",
+        },
+        {
+          inputs: [],
+          name: "getPublicKey",
+          outputs: [
+            {
+              internalType: "bytes32",
+              name: "",
+              type: "bytes32",
+            },
+            {
+              internalType: "bytes32",
+              name: "",
+              type: "bytes32",
+            },
+          ],
+          stateMutability: "view",
+          type: "function",
+        },
+        {
+          inputs: [
+            {
+              internalType: "string",
+              name: "domain",
+              type: "string",
+            },
+            {
+              internalType: "bytes",
+              name: "_passkeyInputs",
+              type: "bytes",
+            },
+            {
+              internalType: "bytes32",
+              name: "_recoveryHash",
+              type: "bytes32",
+            },
+            {
+              internalType: "string",
+              name: "_email",
+              type: "string",
+            },
+          ],
+          name: "initialize",
+          outputs: [],
+          stateMutability: "nonpayable",
+          type: "function",
+        },
+        {
+          inputs: [
+            {
+              internalType: "address",
+              name: "",
+              type: "address",
+            },
+            {
+              internalType: "address",
+              name: "",
+              type: "address",
+            },
+            {
+              internalType: "uint256[]",
+              name: "",
+              type: "uint256[]",
+            },
+            {
+              internalType: "uint256[]",
+              name: "",
+              type: "uint256[]",
+            },
+            {
+              internalType: "bytes",
+              name: "",
+              type: "bytes",
+            },
+          ],
+          name: "onERC1155BatchReceived",
+          outputs: [
+            {
+              internalType: "bytes4",
+              name: "",
+              type: "bytes4",
+            },
+          ],
+          stateMutability: "pure",
+          type: "function",
+        },
+        {
+          inputs: [
+            {
+              internalType: "address",
+              name: "",
+              type: "address",
+            },
+            {
+              internalType: "address",
+              name: "",
+              type: "address",
+            },
+            {
+              internalType: "uint256",
+              name: "",
+              type: "uint256",
+            },
+            {
+              internalType: "uint256",
+              name: "",
+              type: "uint256",
+            },
+            {
+              internalType: "bytes",
+              name: "",
+              type: "bytes",
+            },
+          ],
+          name: "onERC1155Received",
+          outputs: [
+            {
+              internalType: "bytes4",
+              name: "",
+              type: "bytes4",
+            },
+          ],
+          stateMutability: "pure",
+          type: "function",
+        },
+        {
+          inputs: [
+            {
+              internalType: "address",
+              name: "",
+              type: "address",
+            },
+            {
+              internalType: "address",
+              name: "",
+              type: "address",
+            },
+            {
+              internalType: "uint256",
+              name: "",
+              type: "uint256",
+            },
+            {
+              internalType: "bytes",
+              name: "",
+              type: "bytes",
+            },
+          ],
+          name: "onERC721Received",
+          outputs: [
+            {
+              internalType: "bytes4",
+              name: "",
+              type: "bytes4",
+            },
+          ],
+          stateMutability: "pure",
+          type: "function",
+        },
+        {
+          inputs: [],
+          name: "passkeyInputs",
+          outputs: [
+            {
+              internalType: "bytes",
+              name: "",
+              type: "bytes",
+            },
+          ],
+          stateMutability: "view",
+          type: "function",
+        },
+        {
+          inputs: [],
+          name: "recoveryHash",
+          outputs: [
+            {
+              internalType: "bytes32",
+              name: "",
+              type: "bytes32",
+            },
+          ],
+          stateMutability: "view",
+          type: "function",
+        },
+        {
+          inputs: [
+            {
+              internalType: "bytes4",
+              name: "interfaceId",
+              type: "bytes4",
+            },
+          ],
+          name: "supportsInterface",
+          outputs: [
+            {
+              internalType: "bool",
+              name: "",
+              type: "bool",
+            },
+          ],
+          stateMutability: "view",
+          type: "function",
+        },
+        {
+          inputs: [
+            {
+              internalType: "address",
+              name: "",
+              type: "address",
+            },
+            {
+              internalType: "address",
+              name: "",
+              type: "address",
+            },
+            {
+              internalType: "address",
+              name: "",
+              type: "address",
+            },
+            {
+              internalType: "uint256",
+              name: "",
+              type: "uint256",
+            },
+            {
+              internalType: "bytes",
+              name: "",
+              type: "bytes",
+            },
+            {
+              internalType: "bytes",
+              name: "",
+              type: "bytes",
+            },
+          ],
+          name: "tokensReceived",
+          outputs: [],
+          stateMutability: "pure",
+          type: "function",
+        },
+        {
+          inputs: [
+            {
+              internalType: "bytes",
+              name: "proof",
+              type: "bytes",
+            },
+          ],
+          name: "verifyPasskey",
+          outputs: [
+            {
+              internalType: "bool",
+              name: "",
+              type: "bool",
+            },
+          ],
+          stateMutability: "view",
+          type: "function",
+        },
+        {
+          inputs: [
+            {
+              internalType: "bytes",
+              name: "proof",
+              type: "bytes",
+            },
+          ],
+          name: "verifyRecovery",
+          outputs: [
+            {
+              internalType: "bool",
+              name: "",
+              type: "bool",
+            },
+          ],
+          stateMutability: "view",
+          type: "function",
+        },
+        {
+          stateMutability: "payable",
+          type: "receive",
+        },
+      ],
+      inheritedFunctions: {
+        onERC1155BatchReceived: "contracts/callback/TokenCallbackHandler.sol",
+        onERC1155Received: "contracts/callback/TokenCallbackHandler.sol",
+        onERC721Received: "contracts/callback/TokenCallbackHandler.sol",
+        supportsInterface: "contracts/callback/TokenCallbackHandler.sol",
+        tokensReceived: "contracts/callback/TokenCallbackHandler.sol",
+      },
+    },
+  },
   534351: {
     LunaFactory: {
-      address: "0x0562eefAD05870Dd74dEE7d08a338182eB86De25",
+      address: "0x1Baf9847E474b1B548545b92F5186097DB4E77B1",
       abi: [
         {
           inputs: [
@@ -119,6 +671,26 @@ const deployedContracts = {
               type: "bytes",
             },
             {
+              internalType: "bytes",
+              name: "authenticatorData",
+              type: "bytes",
+            },
+            {
+              internalType: "bytes1",
+              name: "authenticatorDataFlagMask",
+              type: "bytes1",
+            },
+            {
+              internalType: "bytes",
+              name: "clientData",
+              type: "bytes",
+            },
+            {
+              internalType: "uint256",
+              name: "clientChallengeDataOffset",
+              type: "uint256",
+            },
+            {
               internalType: "address[]",
               name: "dests",
               type: "address[]",
@@ -219,6 +791,26 @@ const deployedContracts = {
               internalType: "bytes",
               name: "proof",
               type: "bytes",
+            },
+            {
+              internalType: "bytes",
+              name: "authenticatorData",
+              type: "bytes",
+            },
+            {
+              internalType: "bytes1",
+              name: "authenticatorDataFlagMask",
+              type: "bytes1",
+            },
+            {
+              internalType: "bytes",
+              name: "clientData",
+              type: "bytes",
+            },
+            {
+              internalType: "uint256",
+              name: "clientChallengeDataOffset",
+              type: "uint256",
             },
             {
               internalType: "address",

@@ -57,26 +57,18 @@ library Conversion {
     )
         internal
         pure
-        returns (bytes32, bytes32, string memory, bytes memory, bytes1, bytes memory, uint)
+        returns (bytes32, bytes32, string memory)
     {
         (
             bytes32 pubkeyx,
             bytes32 pubkeyy,
-            string memory credentialId,
-            bytes memory authenticatorData,
-            bytes1 authenticatorDataFlagMask,
-            bytes memory clientData,
-            uint clientChallengeDataOffset
-        ) = abi.decode(_inputs, (bytes32, bytes32, string, bytes, bytes1, bytes, uint));
+            string memory credentialId
+        ) = abi.decode(_inputs, (bytes32, bytes32, string));
 
         return (
             pubkeyx,
             pubkeyy,
-            credentialId,
-            authenticatorData,
-            authenticatorDataFlagMask,
-            clientData,
-            clientChallengeDataOffset
+            credentialId
         );
     }
 
