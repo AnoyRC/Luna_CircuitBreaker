@@ -1,25 +1,7 @@
 use dep::std;
 use dep::array_helpers;
 
-fn main(
-    pub_key_x: [u8; 32],
-    pub_key_y: [u8; 32],
-    signature: [u8; 64],
-    message: pub [u8; 32],
-    pub_key_x_hash: pub Field
-) {
-    let mut sliced = [0; 20];
-
-    for i in 0..20 {
-        sliced[i] = pub_key_x[i];
-    }
-
-    let key = array_helpers::u8_to_eth_address(sliced);
-
-    let hash = std::hash::poseidon::bn254::hash_1([key]);
-
-    assert(hash == pub_key_x_hash);
-
+fn main(pub_key_x: pub [u8; 32], pub_key_y: pub [u8; 32], signature: [u8; 64], message: pub [u8; 32]) {
     let isValid = std::ecdsa_secp256r1::verify_signature(pub_key_x, pub_key_y, signature, message);
     assert(isValid == true);
 }
@@ -58,6 +40,5 @@ fn test_main() {
         143, 134, 164, 135
     ];
 
-    let pubkey_x_hash: Field = 0x0dbd798d1c406bf50bafb2804cd01e05792ca1b201f5f41354b170d51d7f3659;
-    main(pubkey_x, pubkey_y, signature, message, pubkey_x_hash);
+    main(pubkey_x, pubkey_y, signature, message);
 }

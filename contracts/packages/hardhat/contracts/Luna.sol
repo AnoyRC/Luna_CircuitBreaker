@@ -54,25 +54,35 @@ contract Luna is TokenCallbackHandler, Initializable {
     }
 
     function getCredentialId() public view returns (string memory) {
-        (, string memory credentialId, , , , ) = Conversion.decodeEncodedInputs(passkeyInputs);
+        (, ,string memory credentialId, , , , ) = Conversion.decodeEncodedInputs(passkeyInputs);
         return credentialId;
     }
 
+    function getPublicKey() public view returns (bytes32, bytes32) {
+        (bytes32 pubkeyx, bytes32 pubkeyy, , , , , ) = Conversion.decodeEncodedInputs(passkeyInputs);
+        return (pubkeyx, pubkeyy);
+    }
+
+    function getPasskeyMessage() public view returns (bytes32) {
+        (,,, bytes memory authenticatorData, bytes1 authenticatorDataFlagMask, bytes memory clientData, uint clientChallengeDataOffset) = Conversion.decodeEncodedInputs(passkeyInputs);
+        return Conversion.computeMessage( authenticatorData, authenticatorDataFlagMask, clientData, Conversion.getPasskeyMessage(getNonce()) , clientChallengeDataOffset);
+    }
+
     function verifyPasskey(bytes calldata proof) public view returns (bool) {
-        (bytes32 pubkeyHash, , bytes memory authenticatorData, bytes1 authenticatorDataFlagMask, bytes memory clientData, uint clientChallengeDataOffset) = Conversion.decodeEncodedInputs(passkeyInputs);
-        bytes32 message = Conversion.computeMessage( authenticatorData, authenticatorDataFlagMask, clientData, Strings.toString(getNonce()) , clientChallengeDataOffset);
+        (bytes32 pubkeyx, bytes32 pubkeyy, , bytes memory authenticatorData, bytes1 authenticatorDataFlagMask, bytes memory clientData, uint clientChallengeDataOffset) = Conversion.decodeEncodedInputs(passkeyInputs);
+        bytes32 message = Conversion.computeMessage( authenticatorData, authenticatorDataFlagMask, clientData, Conversion.getPasskeyMessage(getNonce()) , clientChallengeDataOffset);
 
 
-        bytes32[] memory inputs = Conversion.convertInputs(message, pubkeyHash);
+        bytes32[] memory inputs = Conversion.convertPasskeyInputs(pubkeyx, pubkeyy, message);
         return PASSKEY_VERIFIER.verify(proof, inputs);
     }
 
     function usePasskey(bytes calldata proof) internal returns (bool) {
-        (bytes32 pubkeyHash, , bytes memory authenticatorData, bytes1 authenticatorDataFlagMask, bytes memory clientData, uint clientChallengeDataOffset) = Conversion.decodeEncodedInputs(passkeyInputs);
-        bytes32 message = Conversion.computeMessage( authenticatorData, authenticatorDataFlagMask, clientData, Strings.toString(_useNonce()) , clientChallengeDataOffset);
+        (bytes32 pubkeyx, bytes32 pubkeyy, , bytes memory authenticatorData, bytes1 authenticatorDataFlagMask, bytes memory clientData, uint clientChallengeDataOffset) = Conversion.decodeEncodedInputs(passkeyInputs);
+        bytes32 message = Conversion.computeMessage( authenticatorData, authenticatorDataFlagMask, clientData, Conversion.getPasskeyMessage(_useNonce()) , clientChallengeDataOffset);
 
 
-        bytes32[] memory inputs = Conversion.convertInputs(message, pubkeyHash);
+        bytes32[] memory inputs = Conversion.convertPasskeyInputs(pubkeyx, pubkeyy, message);
         return PASSKEY_VERIFIER.verify(proof, inputs);
     }
 

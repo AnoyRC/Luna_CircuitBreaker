@@ -5,6 +5,7 @@ import { useDispatch, useSelector } from "react-redux";
 import useLuna from "./useLuna";
 import { setIsLoading, setPasskey } from "@/redux/slice/transferSlice";
 import { toast } from "sonner";
+import { ethers } from "ethers";
 
 export default function useTransfer() {
   const dispatch = useDispatch();
@@ -20,7 +21,7 @@ export default function useTransfer() {
 
       const authentication = await client.authenticate(
         [credentialId],
-        btoa(nonce.toString()),
+        ethers.utils.sha256(ethers.utils.hexZeroPad(nonce._hex, 32)).toString(),
         {
           authenticatorType: "auto",
           userVerification: "required",

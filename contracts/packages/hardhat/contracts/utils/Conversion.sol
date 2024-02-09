@@ -19,6 +19,23 @@ library Conversion {
         return byte32Inputs;
     }
 
+    function convertPasskeyInputs(bytes32 pubkeyx, bytes32 pubkeyy, bytes32 message) internal pure returns (bytes32 [] memory){
+        bytes32[] memory byte32Inputs = new bytes32[](96);
+
+        for (uint256 i = 0; i < 32; i++) {
+            byte32Inputs[i] = convertToPaddedByte32(pubkeyx[i]);
+            byte32Inputs[i + 32] = convertToPaddedByte32(pubkeyy[i]);
+            byte32Inputs[i + 64] = convertToPaddedByte32(message[i]);
+        }
+
+        return byte32Inputs;
+    }
+
+    function getPasskeyMessage(uint256 _nonce) internal pure returns (string memory) {
+        bytes32 hash = sha256(abi.encodePacked(_nonce));
+        return Strings.toHexString(uint256(hash), 32);
+    }
+
     function convertToPaddedByte32(bytes32 value) internal pure returns (bytes32) {
         bytes32 paddedValue;
         paddedValue = bytes32(uint256(value) >> (31 * 8));
@@ -40,19 +57,21 @@ library Conversion {
     )
         internal
         pure
-        returns (bytes32 ,string memory, bytes memory, bytes1, bytes memory, uint)
+        returns (bytes32, bytes32, string memory, bytes memory, bytes1, bytes memory, uint)
     {
         (
-            bytes32 pubkeyHash,
+            bytes32 pubkeyx,
+            bytes32 pubkeyy,
             string memory credentialId,
             bytes memory authenticatorData,
             bytes1 authenticatorDataFlagMask,
             bytes memory clientData,
             uint clientChallengeDataOffset
-        ) = abi.decode(_inputs, (bytes32, string, bytes, bytes1, bytes, uint));
+        ) = abi.decode(_inputs, (bytes32, bytes32, string, bytes, bytes1, bytes, uint));
 
         return (
-            pubkeyHash,
+            pubkeyx,
+            pubkeyy,
             credentialId,
             authenticatorData,
             authenticatorDataFlagMask,

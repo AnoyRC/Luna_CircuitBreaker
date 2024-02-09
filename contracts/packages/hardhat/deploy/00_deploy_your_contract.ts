@@ -21,10 +21,14 @@ const deployYourContract: DeployFunction = async function (hre: HardhatRuntimeEn
   const { deployer } = await hre.getNamedAccounts();
   const { deploy } = hre.deployments;
 
-  await deploy("LunaSavingManager", {
+  await deploy("LunaFactory", {
     from: deployer,
     // Contract constructor arguments
-    args: [],
+    args: [
+      "0xf1E842Ef0774dBE7CaF7f0F95d1315fD834d2a4b",
+      "0xbb027482d1F79CeC2AaFA460C428C2A7AE74e970",
+      "0x50F1bbb486D62921eD9cE411c6b85Ec0B73D9130",
+    ],
     log: true,
     // autoMine: can be passed to the deploy function to make the deployment process faster on local networks by
     // automatically mining the contract deployment transaction. There is no effect on live networks.

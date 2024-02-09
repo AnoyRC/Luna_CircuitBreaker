@@ -7,7 +7,7 @@ import { GenericContractsDeclaration } from "~~/utils/scaffold-eth/contract";
 const deployedContracts = {
   534351: {
     LunaFactory: {
-      address: "0xcbd8EF2d15E11fC65793e693d7D11e918fAfa5D6",
+      address: "0x0562eefAD05870Dd74dEE7d08a338182eB86De25",
       abi: [
         {
           inputs: [
@@ -1285,7 +1285,7 @@ const deployedContracts = {
       },
     },
     PasskeyUltraVerifier: {
-      address: "0x2fAF5856C60C14730fd7594684C2C7d52097f440",
+      address: "0xbb027482d1F79CeC2AaFA460C428C2A7AE74e970",
       abi: [
         {
           inputs: [],
