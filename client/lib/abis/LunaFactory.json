@@ -109,24 +109,9 @@
         "type": "bytes"
       },
       {
-        "internalType": "bytes",
-        "name": "authenticatorData",
-        "type": "bytes"
-      },
-      {
-        "internalType": "bytes1",
-        "name": "authenticatorDataFlagMask",
-        "type": "bytes1"
-      },
-      {
-        "internalType": "bytes",
-        "name": "clientData",
-        "type": "bytes"
-      },
-      {
-        "internalType": "uint256",
-        "name": "clientChallengeDataOffset",
-        "type": "uint256"
+        "internalType": "bytes32",
+        "name": "message",
+        "type": "bytes32"
       },
       {
         "internalType": "address[]",
@@ -231,24 +216,9 @@
         "type": "bytes"
       },
       {
-        "internalType": "bytes",
-        "name": "authenticatorData",
-        "type": "bytes"
-      },
-      {
-        "internalType": "bytes1",
-        "name": "authenticatorDataFlagMask",
-        "type": "bytes1"
-      },
-      {
-        "internalType": "bytes",
-        "name": "clientData",
-        "type": "bytes"
-      },
-      {
-        "internalType": "uint256",
-        "name": "clientChallengeDataOffset",
-        "type": "uint256"
+        "internalType": "bytes32",
+        "name": "message",
+        "type": "bytes32"
       },
       {
         "internalType": "address",

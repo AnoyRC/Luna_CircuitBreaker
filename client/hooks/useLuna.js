@@ -70,5 +70,44 @@ export default function useLuna() {
     }
   };
 
-  return { isValidLuna, getLunaAddress, getCredentialId, getNonce };
+  const getPublicKeys = async (address) => {
+    try {
+      const provider = new ethers.providers.JsonRpcProvider(
+        process.env.NEXT_PUBLIC_RPC_URL
+      );
+
+      const luna = new Contract(address, LunaABI, provider);
+
+      const publicKeys = await luna.getPublicKey();
+
+      return publicKeys;
+    } catch (e) {
+      throw new Error(e);
+    }
+  };
+
+  const verifyPasskey = async (address, proof, message) => {
+    try {
+      const provider = new ethers.providers.JsonRpcProvider(
+        process.env.NEXT_PUBLIC_RPC_URL
+      );
+
+      const luna = new Contract(address, LunaABI, provider);
+
+      const verified = await luna.verifyPasskey(proof, message);
+
+      return verified;
+    } catch (e) {
+      throw new Error(e);
+    }
+  };
+
+  return {
+    isValidLuna,
+    getLunaAddress,
+    getCredentialId,
+    getNonce,
+    getPublicKeys,
+    verifyPasskey,
+  };
 }

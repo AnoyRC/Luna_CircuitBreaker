@@ -31,11 +31,6 @@ library Conversion {
         return byte32Inputs;
     }
 
-    function getPasskeyMessage(uint256 _nonce) internal pure returns (string memory) {
-        bytes32 hash = sha256(abi.encodePacked(_nonce));
-        return Strings.toHexString(uint256(hash), 32);
-    }
-
     function convertToPaddedByte32(bytes32 value) internal pure returns (bytes32) {
         bytes32 paddedValue;
         paddedValue = bytes32(uint256(value) >> (31 * 8));
@@ -70,81 +65,5 @@ library Conversion {
             pubkeyy,
             credentialId
         );
-    }
-
-    function computeMessage(
-        bytes memory authenticatorData,
-        bytes1 authenticatorDataFlagMask,
-        bytes memory clientData,
-        string memory clientChallenge,
-        uint clientChallengeDataOffset
-    ) internal pure returns (bytes32) {
-        if (
-            (authenticatorData[32] & authenticatorDataFlagMask) !=
-            authenticatorDataFlagMask
-        ) {
-            revert InvalidAuthenticatorData();
-        }
-
-        bytes memory challengeExtracted = new bytes(
-            bytes(clientChallenge).length
-        );
-
-        copyBytes(
-            clientData,
-            clientChallengeDataOffset,
-            challengeExtracted.length,
-            challengeExtracted,
-            0
-        );
-
-        if (
-            keccak256(abi.encodePacked(bytes(clientChallenge))) !=
-            keccak256(abi.encodePacked(challengeExtracted))
-        ) {
-            revert InvalidClientData();
-        }
-
-        bytes memory verifyData = new bytes(authenticatorData.length + 32);
-
-        copyBytes(
-            authenticatorData,
-            0,
-            authenticatorData.length,
-            verifyData,
-            0
-        );
-
-        copyBytes(
-            abi.encodePacked(sha256(clientData)),
-            0,
-            32,
-            verifyData,
-            authenticatorData.length
-        );
-
-        return (sha256(verifyData));
-    }
-
-    function copyBytes(
-        bytes memory _from,
-        uint _fromOffset,
-        uint _length,
-        bytes memory _to,
-        uint _toOffset
-    ) internal pure returns (bytes memory _copiedBytes) {
-        uint minLength = _length + _toOffset;
-        require(_to.length >= minLength);
-        uint i = 32 + _fromOffset; 
-        uint j = 32 + _toOffset;
-        while (i < (32 + _fromOffset + _length)) {
-            assembly {
-                let tmp := mload(add(_from, i))
-                mstore(add(_to, j), tmp)
-            }
-            i += 32;
-            j += 32;
-        }
-        return _to;
     }
 }

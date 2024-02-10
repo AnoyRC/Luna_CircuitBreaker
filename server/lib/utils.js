@@ -103,6 +103,19 @@ function parseUint8ArrayToStrArray(value) {
   return array;
 }
 
+function computeMessage(authenticatorData, clientData) {
+  const authenticatorDataBytes = ethers.utils.arrayify(authenticatorData);
+
+  const clientDataHash = ethers.utils.sha256(clientData);
+
+  const concatenatedData = ethers.utils.concat([
+    authenticatorDataBytes,
+    clientDataHash,
+  ]);
+
+  return ethers.utils.sha256(concatenatedData);
+}
+
 module.exports = {
   bufferFromBase64,
   derToRS,
@@ -113,4 +126,5 @@ module.exports = {
   getArray,
   getSignature,
   parseUint8ArrayToStrArray,
+  computeMessage,
 };

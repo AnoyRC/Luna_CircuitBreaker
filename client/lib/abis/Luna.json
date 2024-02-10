@@ -16,16 +16,6 @@
     "type": "constructor"
   },
   {
-    "inputs": [],
-    "name": "InvalidAuthenticatorData",
-    "type": "error"
-  },
-  {
-    "inputs": [],
-    "name": "InvalidClientData",
-    "type": "error"
-  },
-  {
     "anonymous": false,
     "inputs": [
       {
@@ -102,24 +92,9 @@
         "type": "bytes"
       },
       {
-        "internalType": "bytes",
-        "name": "authenticatorData",
-        "type": "bytes"
-      },
-      {
-        "internalType": "bytes1",
-        "name": "authenticatorDataFlagMask",
-        "type": "bytes1"
-      },
-      {
-        "internalType": "bytes",
-        "name": "clientData",
-        "type": "bytes"
-      },
-      {
-        "internalType": "uint256",
-        "name": "clientChallengeDataOffset",
-        "type": "uint256"
+        "internalType": "bytes32",
+        "name": "message",
+        "type": "bytes32"
       },
       {
         "internalType": "address",
@@ -156,24 +131,9 @@
         "type": "bytes"
       },
       {
-        "internalType": "bytes",
-        "name": "authenticatorData",
-        "type": "bytes"
-      },
-      {
-        "internalType": "bytes1",
-        "name": "authenticatorDataFlagMask",
-        "type": "bytes1"
-      },
-      {
-        "internalType": "bytes",
-        "name": "clientData",
-        "type": "bytes"
-      },
-      {
-        "internalType": "uint256",
-        "name": "clientChallengeDataOffset",
-        "type": "uint256"
+        "internalType": "bytes32",
+        "name": "message",
+        "type": "bytes32"
       },
       {
         "internalType": "address[]",
@@ -276,40 +236,6 @@
         "internalType": "uint256",
         "name": "",
         "type": "uint256"
-      }
-    ],
-    "stateMutability": "view",
-    "type": "function"
-  },
-  {
-    "inputs": [
-      {
-        "internalType": "bytes",
-        "name": "authenticatorData",
-        "type": "bytes"
-      },
-      {
-        "internalType": "bytes1",
-        "name": "authenticatorDataFlagMask",
-        "type": "bytes1"
-      },
-      {
-        "internalType": "bytes",
-        "name": "clientData",
-        "type": "bytes"
-      },
-      {
-        "internalType": "uint256",
-        "name": "clientChallengeDataOffset",
-        "type": "uint256"
-      }
-    ],
-    "name": "getPasskeyMessage",
-    "outputs": [
-      {
-        "internalType": "bytes32",
-        "name": "",
-        "type": "bytes32"
       }
     ],
     "stateMutability": "view",
@@ -559,29 +485,33 @@
   {
     "inputs": [
       {
+        "internalType": "bytes32",
+        "name": "",
+        "type": "bytes32"
+      }
+    ],
+    "name": "usedNonces",
+    "outputs": [
+      {
+        "internalType": "bool",
+        "name": "",
+        "type": "bool"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
         "internalType": "bytes",
         "name": "proof",
         "type": "bytes"
       },
       {
-        "internalType": "bytes",
-        "name": "authenticatorData",
-        "type": "bytes"
-      },
-      {
-        "internalType": "bytes1",
-        "name": "authenticatorDataFlagMask",
-        "type": "bytes1"
-      },
-      {
-        "internalType": "bytes",
-        "name": "clientData",
-        "type": "bytes"
-      },
-      {
-        "internalType": "uint256",
-        "name": "clientChallengeDataOffset",
-        "type": "uint256"
+        "internalType": "bytes32",
+        "name": "message",
+        "type": "bytes32"
       }
     ],
     "name": "verifyPasskey",

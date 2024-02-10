@@ -22,6 +22,8 @@ contract Luna is TokenCallbackHandler, Initializable {
     PasskeyUltraVerifier public immutable PASSKEY_VERIFIER;
     RecoveryUltraVerifier public immutable RECOVERY_VERIFIER;
 
+    mapping(bytes32 => bool) public usedNonces;
+
     uint256 private nonce;
 
     constructor(
@@ -63,25 +65,21 @@ contract Luna is TokenCallbackHandler, Initializable {
         return (pubkeyx, pubkeyy);
     }
 
-    function getPasskeyMessage( bytes memory authenticatorData, bytes1 authenticatorDataFlagMask, bytes memory clientData, uint clientChallengeDataOffset) public view returns (bytes32) {
-        return Conversion.computeMessage( authenticatorData, authenticatorDataFlagMask, clientData, Conversion.getPasskeyMessage(getNonce()) , clientChallengeDataOffset);
-    }
-
-    function verifyPasskey(bytes calldata proof, bytes memory authenticatorData, bytes1 authenticatorDataFlagMask, bytes memory clientData, uint clientChallengeDataOffset) public view returns (bool) {
+    function verifyPasskey(bytes calldata proof, bytes32 message) public view returns (bool) {
         (bytes32 pubkeyx, bytes32 pubkeyy, ) = Conversion.decodeEncodedInputs(passkeyInputs);
-        bytes32 message = Conversion.computeMessage( authenticatorData, authenticatorDataFlagMask, clientData, Conversion.getPasskeyMessage(getNonce()) , clientChallengeDataOffset);
-
 
         bytes32[] memory inputs = Conversion.convertPasskeyInputs(pubkeyx, pubkeyy, message);
+
         return PASSKEY_VERIFIER.verify(proof, inputs);
     }
 
-    function usePasskey(bytes calldata proof, bytes memory authenticatorData, bytes1 authenticatorDataFlagMask, bytes memory clientData, uint clientChallengeDataOffset) internal returns (bool) {
+    function usePasskey(bytes calldata proof, bytes32 message) internal returns (bool) {
+        require(!usedNonces[message], "Nonce already used");
         (bytes32 pubkeyx, bytes32 pubkeyy,) = Conversion.decodeEncodedInputs(passkeyInputs);
-        bytes32 message = Conversion.computeMessage( authenticatorData, authenticatorDataFlagMask, clientData, Conversion.getPasskeyMessage(_useNonce()) , clientChallengeDataOffset);
-
 
         bytes32[] memory inputs = Conversion.convertPasskeyInputs(pubkeyx, pubkeyy, message);
+
+        usedNonces[message] = true;
         return PASSKEY_VERIFIER.verify(proof, inputs);
     }
 
@@ -101,14 +99,14 @@ contract Luna is TokenCallbackHandler, Initializable {
         return RECOVERY_VERIFIER.verify(proof, _inputs);
     }
 
-    function execute(bytes calldata proof, bytes memory authenticatorData, bytes1 authenticatorDataFlagMask, bytes memory clientData, uint clientChallengeDataOffset, address dest, uint256 value, bytes calldata func) external payable returns (bool) {
-        require(usePasskey(proof, authenticatorData, authenticatorDataFlagMask, clientData, clientChallengeDataOffset), "Invalid passkey");
+    function execute(bytes calldata proof, bytes32 message,  address dest, uint256 value, bytes calldata func) external payable returns (bool) {
+        require(usePasskey(proof, message), "Invalid passkey");
         _execute(dest, value, func);
         return true;
     }
 
-    function executeBatch(bytes calldata proof, bytes memory authenticatorData, bytes1 authenticatorDataFlagMask, bytes memory clientData, uint clientChallengeDataOffset,  address[] calldata dest, uint256[] calldata value, bytes[] calldata func) external payable returns (bool) {
-        require(usePasskey(proof, authenticatorData, authenticatorDataFlagMask, clientData, clientChallengeDataOffset), "Invalid passkey");
+    function executeBatch(bytes calldata proof, bytes32 message,  address[] calldata dest, uint256[] calldata value, bytes[] calldata func) external payable returns (bool) {
+        require(usePasskey(proof, message), "Invalid passkey");
         _executeBatch(dest, value, func);
         return true;
     }

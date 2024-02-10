@@ -5,23 +5,30 @@ import { useDispatch, useSelector } from "react-redux";
 import useLuna from "./useLuna";
 import { setIsLoading, setPasskey } from "@/redux/slice/transferSlice";
 import { toast } from "sonner";
-import { ethers } from "ethers";
+import { v4 } from "uuid";
+import axios from "axios";
+import useCircuits from "./useCircuits";
 
 export default function useTransfer() {
   const dispatch = useDispatch();
   const walletAddress = useSelector((state) => state.user.user.pubKey);
-  const { getCredentialId, getNonce } = useLuna();
+  const { getCredentialId, getPublicKeys, verifyPasskey } = useLuna();
+  const passkey = useSelector((state) => state.transfer.passkey);
+  const { passkey_prove } = useCircuits();
 
   const handlePasskey = async () => {
     dispatch(setIsLoading(true));
 
     try {
       const credentialId = await getCredentialId(walletAddress);
-      const nonce = await getNonce(walletAddress);
+
+      const randomMessage = v4();
+
+      console.log(randomMessage);
 
       const authentication = await client.authenticate(
         [credentialId],
-        ethers.utils.sha256(ethers.utils.hexZeroPad(nonce._hex, 32)).toString(),
+        randomMessage,
         {
           authenticatorType: "auto",
           userVerification: "required",
@@ -39,12 +46,30 @@ export default function useTransfer() {
   };
 
   const handleTransfer = async () => {
-    const credentialId = await getCredentialId(walletAddress);
-    const response = await navigator.credentials.get({
-      credentialId: credentialId,
-    });
+    const publicKeys = await getPublicKeys(walletAddress);
 
-    console.log(response);
+    const response = await axios.post(
+      `${process.env.NEXT_PUBLIC_BACKEND_URL}/api/utils/passkey/execute`,
+      {
+        authenticatorData: passkey.authenticatorData,
+        clientData: passkey.clientData,
+        signature: passkey.signature,
+      }
+    );
+
+    const proof = await passkey_prove(
+      publicKeys[0],
+      publicKeys[1],
+      response.data.signatureHex.hex,
+      response.data.messageHex
+    );
+
+    const isVerified = await verifyPasskey(
+      walletAddress,
+      proof,
+      response.data.messageHex
+    );
+    console.log(isVerified);
   };
 
   return { handlePasskey, handleTransfer };
