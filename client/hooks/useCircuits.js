@@ -37,6 +37,8 @@ export default function useCircuits() {
       message: Array.from(ethers.utils.arrayify(message)),
     };
 
+    console.log(JSON.stringify(inputs));
+
     const output = await noir.generateFinalProof(inputs);
 
     return ethers.utils.hexlify(output.proof);

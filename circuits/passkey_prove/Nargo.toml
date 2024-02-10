@@ -5,4 +5,3 @@ authors = [""]
 compiler_version = ">=0.22.0"
 
 [dependencies]
-array_helpers = { tag = "v0.19.0", git = "https://github.com/colinnielsen/noir-array-helpers" }

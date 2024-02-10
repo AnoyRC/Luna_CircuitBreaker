@@ -8,6 +8,11 @@ import {
   setMarketData,
   setTransactions,
 } from "@/redux/slice/dataSlice";
+import {
+  LunaFactory,
+  PasskeyUltraVerifier,
+  RecoveryUltraVerifier,
+} from "@/lib/abis/AddressManager";
 
 export default function useWalletData() {
   const dispatch = useDispatch();
@@ -41,7 +46,21 @@ export default function useWalletData() {
         `https://api-sepolia.scrollscan.com/api?module=account&action=txlist&address=${address}&page=1&offset=20`
       );
 
-      dispatch(setTransactions(res.data.result));
+      const internalres = await axios.get(
+        `https://api-sepolia.scrollscan.com/api?module=account&action=txlistinternal&address=${address}&page=1&offset=20`
+      );
+
+      const transactions = res.data.result.concat(internalres.data.result);
+      transactions.sort((a, b) => b.timeStamp - a.timeStamp);
+      const filteredTx = transactions.filter((tx) => {
+        return tx.to !== null
+          ? tx.to !== "0x9dc6640f365a266f5c43fc375b28583031c03dc9" &&
+              tx.to !== PasskeyUltraVerifier.toLowerCase() &&
+              tx.to !== RecoveryUltraVerifier.toLowerCase() &&
+              tx.from !== LunaFactory.toLowerCase()
+          : false;
+      });
+      dispatch(setTransactions(filteredTx));
     } catch (e) {
       dispatch(setTransactions([]));
     }

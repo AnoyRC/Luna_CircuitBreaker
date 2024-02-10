@@ -2,12 +2,12 @@
 import useWalletData from "@/hooks/useWalletData";
 import { useEffect } from "react";
 import { useSelector } from "react-redux";
+import useSavings from "@/hooks/useSavings";
 
 export default function WalletProvider({ children }) {
   const walletAddress = useSelector((state) => state.user.user.pubKey);
-  //   const ethPrice = useSelector((state) => state.data.ethPrice);
   const { fetchBalance, fetchPrice, fetchTransactions } = useWalletData();
-  //   const { fetchSavings, mintSummaryNFT } = useSavings();
+  const { fetchSavings } = useSavings();
   var currentTimeout = null;
 
   useEffect(() => {
@@ -15,7 +15,7 @@ export default function WalletProvider({ children }) {
       fetchBalance(walletAddress);
       fetchPrice();
       fetchTransactions(walletAddress);
-      //   fetchSavings(walletAddress);
+      fetchSavings(walletAddress);
     }
   }, [walletAddress]);
 
@@ -25,7 +25,7 @@ export default function WalletProvider({ children }) {
       if (walletAddress) {
         fetchBalance(walletAddress);
         fetchTransactions(walletAddress);
-        // fetchSavings(walletAddress);
+        fetchSavings(walletAddress);
         // mintSummaryNFT(walletAddress);
       }
     }, 10000);

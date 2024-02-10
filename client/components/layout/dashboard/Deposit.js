@@ -1,6 +1,6 @@
 "use client";
 
-// import { toggleDepositModal } from "@/redux/slice/modalSlice";
+import { toggleDepositModal } from "@/redux/slice/modalSlice";
 import { Button } from "@material-tailwind/react";
 import { ArrowDownLeft } from "lucide-react";
 import { useDispatch } from "react-redux";
