@@ -8,6 +8,7 @@ import dataReducer from "./slice/dataSlice";
 import transferReducer from "./slice/transferSlice";
 import modalReducer from "./slice/modalSlice";
 import savingsReducer from "./slice/savingSlice";
+import changeEmailReducer from "./slice/changeEmailSlice";
 
 export const store = configureStore({
   reducer: {
@@ -17,6 +18,7 @@ export const store = configureStore({
     transfer: transferReducer,
     modal: modalReducer,
     savings: savingsReducer,
+    changeEmail: changeEmailReducer,
   },
 
   middleware: (getDefaultMiddleware) =>

@@ -1,6 +1,6 @@
 "use client";
 
-// import { handleDialog } from "@/redux/slice/changeEmailSlice";
+import { handleDialog } from "@/redux/slice/changeEmailSlice";
 import { AtSign } from "lucide-react";
 import { useDispatch } from "react-redux";
 

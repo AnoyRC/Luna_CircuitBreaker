@@ -102,6 +102,38 @@ export default function useLuna() {
     }
   };
 
+  const getEmail = async (address) => {
+    try {
+      const provider = new ethers.providers.JsonRpcProvider(
+        process.env.NEXT_PUBLIC_RPC_URL
+      );
+
+      const luna = new Contract(address, LunaABI, provider);
+
+      const email = await luna.email();
+
+      return email;
+    } catch (e) {
+      return false;
+    }
+  };
+
+  const verifyEmail = async (address, proof) => {
+    try {
+      const provider = new ethers.providers.JsonRpcProvider(
+        process.env.NEXT_PUBLIC_RPC_URL
+      );
+
+      const luna = new Contract(address, LunaABI, provider);
+
+      const isVerified = await luna.verifyRecovery(proof);
+
+      return isVerified;
+    } catch (e) {
+      return false;
+    }
+  };
+
   return {
     isValidLuna,
     getLunaAddress,
@@ -109,5 +141,7 @@ export default function useLuna() {
     getNonce,
     getPublicKeys,
     verifyPasskey,
+    getEmail,
+    verifyEmail,
   };
 }

@@ -1,4 +1,4 @@
-// import ChangeEmail from "@/components/modal/ChangeEmail";
+import ChangeEmail from "@/components/modal/ChangeEmail";
 // import CheckValidity from "@/components/modal/CheckValidity";
 import DepositModal from "@/components/modal/Deposit";
 // import Nfts from "@/components/modal/Nfts";
@@ -12,11 +12,11 @@ export default function Layout({ children }) {
       <DepositModal />
       <TransferModal />
       {children}
-      {/* <ChangeEmail />
-      <StartSaving />
+      <ChangeEmail />
+      {/* <StartSaving />
       <Savings />
       <Nfts />
-      <CheckValidity /> */}
+      <CheckValidity />  */}
     </>
   );
 }
