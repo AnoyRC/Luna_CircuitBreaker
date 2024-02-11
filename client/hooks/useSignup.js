@@ -39,8 +39,6 @@ export default function useSignup() {
       debug: false,
     });
 
-    console.log(registration);
-
     dispatch(setPasskey(registration));
   };
 

@@ -15,7 +15,7 @@ export default function Info() {
       <div
         className="group mt-2 hover:cursor-pointer"
         onClick={() => {
-          navigator.clipboard.writeText(username);
+          navigator.clipboard.writeText(username + "@luna");
           toast.success("Copied to clipboard!");
         }}
       >
