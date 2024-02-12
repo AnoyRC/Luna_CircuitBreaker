@@ -1,12 +1,12 @@
 "use client";
-// import { handleDialog } from "@/redux/slice/startSavingSlice";
-// import { handleDialog as handleDlg } from "@/redux/slice/savingsSlice";
+import { handleDialog } from "@/redux/slice/startSavingSlice";
+import { handleDialog as handleDlg } from "@/redux/slice/savingSlice";
 import { Button, Chip } from "@material-tailwind/react";
 import { FileImage, PiggyBank } from "lucide-react";
 import { toast } from "sonner";
 import { useDispatch, useSelector } from "react-redux";
 import { Urbanist } from "next/font/google";
-// import { toggleNftModal } from "@/redux/slice/modalSlice";
+import { toggleNftModal } from "@/redux/slice/modalSlice";
 
 const urbanist = Urbanist({
   subsets: ["latin"],
@@ -14,19 +14,18 @@ const urbanist = Urbanist({
 });
 
 export default function Saving() {
-  // const savings = useSelector((state) => state.data.savings);
-  // const ethPrice = useSelector((state) => state.data.ethPrice);
+  const savings = useSelector((state) => state.data.savings);
+  const ethPrice = useSelector((state) => state.data.ethPrice);
   const dispatch = useDispatch();
-  const savings = null;
 
   return (
     <div
       className="border-[1px] border-pink-500 hover:border-black h-full flex flex-col justify-between w-full hover:cursor-pointer bg-white transition duration-300 hover:bg-black rounded-3xl overflow-hidden group relative p-4"
       onClick={() => {
-        // if (!savings) return toast.error("Please Login!");
-        // Number(savings[2]) === 0
-        //   ? dispatch(handleDialog())
-        //   : dispatch(handleDlg());
+        if (!savings) return toast.error("Please Login!");
+        Number(savings[2]) === 0
+          ? dispatch(handleDialog())
+          : dispatch(handleDlg());
       }}
     >
       <div>

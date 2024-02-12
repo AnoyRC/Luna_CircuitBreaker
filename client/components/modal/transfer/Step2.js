@@ -18,8 +18,7 @@ export default function Step2() {
   const balance = useSelector((state) => state.data.balance);
   const ethPrice = useSelector((state) => state.data.ethPrice);
   const dispatch = useDispatch();
-  //   const savings = useSelector((state) => state.data.savings);
-  const savings = null;
+  const savings = useSelector((state) => state.data.savings);
 
   const handleInput = (e) => {
     const decimalRegex = /^[0-9]*\.?[0-9]*$/;

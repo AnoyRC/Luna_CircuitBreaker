@@ -36,6 +36,7 @@ const TransferModal = () => {
   const dispatch = useDispatch();
   const open = useSelector((state) => state.modal.transferModal);
   const step = useSelector((state) => state.transfer.step);
+  const isLoading = useSelector((state) => state.transfer.isLoading);
 
   const handleOpen = () => {
     dispatch(toggleTransferModal(false));
@@ -79,29 +80,32 @@ const TransferModal = () => {
             </CardBody>
 
             <CardFooter className="pt-0 -mt-7">
-              <Typography
-                variant="small"
-                className={"mt-4 flex justify-center " + urbanist.className}
-              >
-                Back to
+              {!isLoading && (
                 <Typography
                   variant="small"
-                  color="blue-gray"
-                  className={
-                    "ml-1 font-bold hover:cursor-pointer " + urbanist.className
-                  }
-                  onClick={() => {
-                    handleOpen();
-                    dispatch(setStep(0));
-                    dispatch(setAmount(""));
-                    dispatch(setAddress(""));
-                    dispatch(setDomain(""));
-                    dispatch(setPasskey(null));
-                  }}
+                  className={"mt-4 flex justify-center " + urbanist.className}
                 >
-                  Dashboard
+                  Back to
+                  <Typography
+                    variant="small"
+                    color="blue-gray"
+                    className={
+                      "ml-1 font-bold hover:cursor-pointer " +
+                      urbanist.className
+                    }
+                    onClick={() => {
+                      handleOpen();
+                      dispatch(setStep(0));
+                      dispatch(setAmount(""));
+                      dispatch(setAddress(""));
+                      dispatch(setDomain(""));
+                      dispatch(setPasskey(null));
+                    }}
+                  >
+                    Dashboard
+                  </Typography>
                 </Typography>
-              </Typography>
+              )}
             </CardFooter>
           </Card>
         </div>

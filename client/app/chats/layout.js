@@ -1,10 +1,10 @@
-// import CheckValidity from "@/components/modal/CheckValidity";
+import CheckValidity from "@/components/modal/CheckValidity";
 
 export default function LandingLayout({ children }) {
   return (
     <>
       {children}
-      {/* <CheckValidity /> */}
+      <CheckValidity />
     </>
   );
 }

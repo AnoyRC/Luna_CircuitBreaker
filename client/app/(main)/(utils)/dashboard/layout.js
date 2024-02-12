@@ -1,10 +1,10 @@
 import ChangeEmail from "@/components/modal/ChangeEmail";
-// import CheckValidity from "@/components/modal/CheckValidity";
+import CheckValidity from "@/components/modal/CheckValidity";
 import DepositModal from "@/components/modal/Deposit";
 import ForgotPasskey from "@/components/modal/ForgotPasskey";
-// import Nfts from "@/components/modal/Nfts";
-// import Savings from "@/components/modal/Savings";
-// import StartSaving from "@/components/modal/StartSaving";
+import Nfts from "@/components/modal/Nfts";
+import Savings from "@/components/modal/Savings";
+import StartSaving from "@/components/modal/StartSaving";
 import TransferModal from "@/components/modal/Transfer";
 
 export default function Layout({ children }) {
@@ -15,10 +15,10 @@ export default function Layout({ children }) {
       {children}
       <ChangeEmail />
       <ForgotPasskey />
-      {/* <StartSaving />
+      <StartSaving />
       <Savings />
       <Nfts />
-      <CheckValidity />  */}
+      <CheckValidity />
     </>
   );
 }

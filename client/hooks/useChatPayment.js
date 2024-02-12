@@ -70,8 +70,6 @@ export default function useChatPayment() {
         response.data.messageHex
       );
 
-      return false;
-
       if (!verified) {
         toast.error("Something went wrong!");
         return false;
