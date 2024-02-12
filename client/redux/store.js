@@ -10,6 +10,7 @@ import modalReducer from "./slice/modalSlice";
 import savingsReducer from "./slice/savingSlice";
 import changeEmailReducer from "./slice/changeEmailSlice";
 import forgotPasskeyReducer from "./slice/forgotPasskeySlice";
+import contactReducer from "./slice/contactsSlice";
 
 export const store = configureStore({
   reducer: {
@@ -21,6 +22,7 @@ export const store = configureStore({
     savings: savingsReducer,
     changeEmail: changeEmailReducer,
     forgotPasskey: forgotPasskeyReducer,
+    contacts: contactReducer,
   },
 
   middleware: (getDefaultMiddleware) =>

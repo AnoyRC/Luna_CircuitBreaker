@@ -7,22 +7,16 @@ function bufferFromBase64(value) {
 }
 
 function derToRS(der) {
-  var offset = 3;
-  var dataOffset;
+  const rLength = der.readUInt8(3);
+  const rStart = 4;
+  const rEnd = rStart + rLength;
+  const r = der.slice(rStart, rEnd);
 
-  if (der[offset] == 0x21) {
-    dataOffset = offset + 2;
-  } else {
-    dataOffset = offset + 1;
-  }
-  const r = der.slice(dataOffset, dataOffset + 32);
-  offset = offset + der[offset] + 1 + 1;
-  if (der[offset] == 0x21) {
-    dataOffset = offset + 2;
-  } else {
-    dataOffset = offset + 1;
-  }
-  const s = der.slice(dataOffset, dataOffset + 32);
+  const sLength = der.readUInt8(rEnd + 1);
+  const sStart = rEnd + 2;
+  const sEnd = sStart + sLength;
+  const s = der.slice(sStart, sEnd);
+
   return [r, s];
 }
 

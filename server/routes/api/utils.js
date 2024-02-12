@@ -3,6 +3,7 @@ const router = express.Router();
 require("dotenv").config();
 const ethers = require("ethers");
 const utils = require("../../lib/utils");
+const base64url = require("base64url");
 
 router.post("/passkey/inputs", async (req, res) => {
   const { pubkey, credentialId, authenticatorData, clientData } = req.body;
