@@ -1,12 +1,18 @@
 const crypto = require("crypto");
 require("dotenv").config();
 const ethers = require("ethers");
+const asn1 = require("asn1.js");
+
+// Define the ASN.1 schema for an ECDSA signature
+const ECDSASignature = asn1.define("ECDSASignature", function () {
+  this.seq().obj(this.key("r").int(), this.key("s").int());
+});
 
 function bufferFromBase64(value) {
   return Buffer.from(value, "base64");
 }
 
-function derToRS(der) {
+async function derToRS(der) {
   const rLength = der.readUInt8(3);
   const rStart = 4;
   const rEnd = rStart + rLength;
@@ -18,6 +24,20 @@ function derToRS(der) {
   const s = der.slice(sStart, sEnd);
 
   return [r, s];
+}
+
+function derToRawSignature(derSignature) {
+  // Parse the DER signature
+  const signature = ECDSASignature.decode(derSignature, "der");
+
+  // Convert r and s to 32-byte buffers
+  const r = Buffer.from(signature.r.toArrayLike(Buffer, "be", 32));
+  const s = Buffer.from(signature.s.toArrayLike(Buffer, "be", 32));
+
+  // Concatenate r and s
+  const rawSignature = Buffer.concat([r, s]);
+
+  return new Uint8Array(rawSignature);
 }
 
 function concatenateBuffers(buffer1, buffer2) {
@@ -121,4 +141,5 @@ module.exports = {
   getSignature,
   parseUint8ArrayToStrArray,
   computeMessage,
+  derToRawSignature,
 };

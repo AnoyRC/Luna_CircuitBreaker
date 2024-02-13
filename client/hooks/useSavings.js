@@ -37,6 +37,9 @@ export default function useSavings() {
 
       const details = await contract.accounts(address);
       dispatch(setSavings(details));
+
+      const nfts = await contract.getAllNFTs(address);
+      dispatch(setNfts(nfts));
     } catch (err) {
       console.log(err);
       dispatch(setSavings(null));

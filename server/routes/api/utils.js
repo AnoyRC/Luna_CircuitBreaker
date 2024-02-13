@@ -59,7 +59,12 @@ router.post("/passkey/execute", async (req, res) => {
 
   const message = await utils.computeMessage(authDataHex, clientDataHex);
 
-  const signatureHex = await utils.getSignature(signature);
+  const signatureArray = await utils.derToRawSignature(
+    utils.bufferFromBase64(signature)
+  );
+  const signatureHex = {
+    hex: ethers.utils.hexlify(signatureArray),
+  };
 
   return res.json({
     authDataHex,
