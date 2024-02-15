@@ -106,7 +106,7 @@ export default function useSignup() {
 
       const lunaAddress = await getLunaAddress(name);
       dispatch(updatePubkey(lunaAddress));
-      dispatch(updateUsername(name + "@luna"));
+      dispatch(updateUsername(name));
       dispatch(setStep(0));
       dispatch(setName(""));
       dispatch(setPasskey(null));

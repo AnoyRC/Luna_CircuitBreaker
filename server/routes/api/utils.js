@@ -90,8 +90,7 @@ router.post("/recovery/inputs", async (req, res) => {
   let pub_key_x = pubKey.substring(0, 64);
   let pub_key_y = pubKey.substring(64, 128);
 
-  const signatureHex = await utils.getSignature(signature);
-  const signatureArray = utils.getArray(signatureHex);
+  const signatureArray = ethers.utils.arrayify(signature);
   const messageArray = ethers.utils.arrayify(
     ethers.utils.hashMessage(ethers.utils.toUtf8Bytes(message))
   );
