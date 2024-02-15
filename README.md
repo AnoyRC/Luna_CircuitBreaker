@@ -18,7 +18,7 @@ Unlike traditional wallets with a defined owner, Luna operates on the principle 
 
 ## Verified Smart Contracts
 
-- Password Verifier - [0xbb027482d1F79CeC2AaFA460C428C2A7AE74e970](https://sepolia.scrollscan.dev/address/0xbb027482d1F79CeC2AaFA460C428C2A7AE74e970#code)
+- Passkey Verifier - [0xbb027482d1F79CeC2AaFA460C428C2A7AE74e970](https://sepolia.scrollscan.dev/address/0xbb027482d1F79CeC2AaFA460C428C2A7AE74e970#code)
 
 - Recovery Verifier - [0x50F1bbb486D62921eD9cE411c6b85Ec0B73D9130](https://sepolia.scrollscan.dev/address/0x50f1bbb486d62921ed9ce411c6b85ec0b73d9130#code)
 
@@ -27,6 +27,21 @@ Unlike traditional wallets with a defined owner, Luna operates on the principle 
 - Luna Factory - [0xE24509B6413319a81A7CEA91e1e739ac2A883799](https://sepolia.scrollscan.dev/address/0xE24509B6413319a81A7CEA91e1e739ac2A883799#code)
 
 - Luna Saving Manager - [0x2aa4c97688f340C8A2bDE2016b16dEFDC259834D](https://sepolia.scrollscan.dev/address/0x2aa4c97688f340C8A2bDE2016b16dEFDC259834D#code)
+
+## Implementations
+
+### Passkey Circuit
+![PasskeyVerifier](https://github.com/AnoyRC/Luna_CircuitBreaker/assets/38689344/bb9a5930-dfa5-484c-8583-a22d33386bb9)
+
+### Recovery Circuit (E-mail)
+![RecoveryVerifier](https://github.com/AnoyRC/Luna_CircuitBreaker/assets/38689344/3b12cf44-8913-40a3-9723-60fdf512a531)
+
+### Luna Transaction Flow
+![WalletFlow](https://github.com/AnoyRC/Luna_CircuitBreaker/assets/38689344/ccda503e-32c3-4ecc-8b97-1533e5501cc7)
+
+### Luna Saving Manager
+![SavingManager](https://github.com/AnoyRC/Luna_CircuitBreaker/assets/38689344/08a9c737-1a14-45e9-a0c7-1c0f754c11e3)
+
 
 ## Features
 
