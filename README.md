@@ -9,7 +9,7 @@
 
 > Luna is a smart contract wallet that leverages zero-knowledge proofs for authentication
 
-This project is the implementation for _[Luna]()_ hackathon project at [Eth Global's Circuit Breaker Hackathon](https://ethglobal.com/events/circuitbreaker)
+This project is the implementation for _[Luna](https://luna-anoyrc.vercel.app/)_ hackathon project at [Eth Global's Circuit Breaker Hackathon](https://ethglobal.com/events/circuitbreaker)
 
 Unlike traditional wallets with a defined owner, Luna operates on the principle that ownership is established through possession of a valid zero-knowledge proof (zk-proof) generated through _passkeys_ and _email-verification_. This wallet introduces a new paradigm in digital asset management, ensuring privacy, security, and optimal performance.
 
