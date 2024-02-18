@@ -67,7 +67,7 @@ export default function Saving() {
 
       <Button
         className={
-          "bg-black mb-1 h-32 normal-case flex w-full border-[1px] border-white rounded-2xl hover:cursor-pointer text-white/70 hover:text-pink-500/70 hover:bg-white shadow-lg transition duration-300 p-4 py-3 group relative overflow-hidden z-10 " +
+          "bg-black mb-1 h-32 normal-case flex w-full border-[1px] border-white rounded-2xl hover:cursor-pointer text-white/70 hover:text-pink-500/70 hover:bg-white shadow-lg transition duration-300 p-4 py-3 group/name relative overflow-hidden z-10 " +
           urbanist.className
         }
         onClick={(e) => {
@@ -77,7 +77,7 @@ export default function Saving() {
       >
         <p className="text-[2.75rem] font-bold mt-6 ">NFTs</p>
         <FileImage
-          className="absolute -bottom-4 -right-2 transition opacity-30 duration-300 group-hover:translate-x-4"
+          className="absolute -bottom-4 -right-2 transition opacity-30 duration-300 group-hover/name:translate-x-4"
           size={100}
         />
       </Button>
